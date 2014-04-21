@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2932EA35-22B8-4A2B-A037-DFDC32E617E2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RemoteLibrary</RootNamespace>
+    <AssemblyName>RemoteLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <CodeContractsAssemblyMode>1</CodeContractsAssemblyMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsRunCodeAnalysis>True</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>True</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>True</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsMissingPublicRequiresAsWarnings>True</CodeContractsMissingPublicRequiresAsWarnings>
+    <CodeContractsInferRequires>True</CodeContractsInferRequires>
+    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
+    <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
+    <CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
+    <CodeContractsSuggestRequires>True</CodeContractsSuggestRequires>
+    <CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>True</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsSQLServerOption />
+    <CodeContractsBaseLineFile />
+    <CodeContractsCacheAnalysisResults>True</CodeContractsCacheAnalysisResults>
+    <CodeContractsFailBuildOnWarnings>False</CodeContractsFailBuildOnWarnings>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ImpromptuInterface">
+      <HintPath>..\packages\ImpromptuInterface.6.2.2\lib\net40\ImpromptuInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>..\packages\protobuf-net.2.0.0.668\lib\net40\protobuf-net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Threading.Tasks.Dataflow, Version=4.5.14.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Tpl.Dataflow.4.5.14\lib\portable-net45+win8\System.Threading.Tasks.Dataflow.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\CanBeNullAttribute.cs" />
+    <Compile Include="Properties\AspMvcActionAttribute.cs" />
+    <Compile Include="Properties\AspMvcActionSelectorAttribute.cs" />
+    <Compile Include="Properties\AspMvcAreaAttribute.cs" />
+    <Compile Include="Properties\AspMvcAreaMasterLocationFormatAttribute.cs" />
+    <Compile Include="Properties\AspMvcAreaPartialViewLocationFormatAttribute.cs" />
+    <Compile Include="Properties\AspMvcAreaViewLocationFormatAttribute.cs" />
+    <Compile Include="Properties\AspMvcControllerAttribute.cs" />
+    <Compile Include="Properties\AspMvcDisplayTemplateAttribute.cs" />
+    <Compile Include="Properties\AspMvcEditorTemplateAttribute.cs" />
+    <Compile Include="Properties\AspMvcMasterAttribute.cs" />
+    <Compile Include="Properties\AspMvcMasterLocationFormatAttribute.cs" />
+    <Compile Include="Properties\AspMvcModelTypeAttribute.cs" />
+    <Compile Include="Properties\AspMvcPartialViewAttribute.cs" />
+    <Compile Include="Properties\AspMvcPartialViewLocationFormatAttribute.cs" />
+    <Compile Include="Properties\AspMvcSupressViewErrorAttribute.cs" />
+    <Compile Include="Properties\AspMvcTemplateAttribute.cs" />
+    <Compile Include="Properties\AspMvcViewAttribute.cs" />
+    <Compile Include="Properties\AspMvcViewLocationFormatAttribute.cs" />
+    <Compile Include="Properties\BaseTypeRequiredAttribute.cs" />
+    <Compile Include="Properties\CannotApplyEqualityOperatorAttribute.cs" />
+    <Compile Include="Properties\ContractAnnotationAttribute.cs" />
+    <Compile Include="Properties\HtmlAttributeValueAttribute.cs" />
+    <Compile Include="Properties\HtmlElementAttributesAttribute.cs" />
+    <Compile Include="Properties\ImplicitUseKindFlags.cs" />
+    <Compile Include="Properties\ImplicitUseTargetFlags.cs" />
+    <Compile Include="Properties\InstantHandleAttribute.cs" />
+    <Compile Include="Properties\InvokerParameterNameAttribute.cs" />
+    <Compile Include="Properties\LocalizationRequiredAttribute.cs" />
+    <Compile Include="Properties\MeansImplicitUseAttribute.cs" />
+    <Compile Include="Properties\NotifyPropertyChangedInvocatorAttribute.cs" />
+    <Compile Include="Properties\NotNullAttribute.cs" />
+    <Compile Include="Properties\PathReferenceAttribute.cs" />
+    <Compile Include="Properties\PublicAPIAttribute.cs" />
+    <Compile Include="Properties\PureAttribute.cs" />
+    <Compile Include="Properties\RazorSectionAttribute.cs" />
+    <Compile Include="Properties\StringFormatMethodAttribute.cs" />
+    <Compile Include="Properties\UsedImplicitlyAttribute.cs" />
+    <Compile Include="src\Util\InterfaceProviders\IGenericRemoteInterfaceProvider.cs" />
+    <Compile Include="src\Exceptions\InstanceNotDefinedException.cs" />
+    <Compile Include="src\Contracts\InvocationException.cs" />
+    <Compile Include="src\Util\MethodInvokers\IRemoteMethodInvoker.cs" />
+    <Compile Include="src\Util\ArgumentProviders\RemoteInterfaceArgumentProvider.cs" />
+    <Compile Include="src\Util\InterfaceProviders\RemoteInterfaceProvider.cs" />
+    <Compile Include="src\Exceptions\RemoteInvocationException.cs" />
+    <Compile Include="src\Util\MethodInvokers\RemoteMethodInvoker.cs" />
+    <Compile Include="src\Exceptions\TypeArgumentException.cs" />
+    <Compile Include="src\Messages\Results\NonNullRemoteInvocationResult.cs" />
+    <Compile Include="src\Messages\Results\NullInvocationResult.cs" />
+    <Compile Include="src\Util\EventHandlers\OnNewInvocationHandler.cs" />
+    <Compile Include="src\Messages\Results\RemoteInvocationExceptionResult.cs" />
+    <Compile Include="src\Messages\Results\RemoteInvocationResult.cs" />
+    <Compile Include="src\Messages\Values\RemoteInvocationValue.cs" />
+    <Compile Include="src\Messages\Values\NullRemoteInvocationValue.cs" />
+    <Compile Include="src\Util\Networking\Server\RemoteInterfaceServer.cs" />
+    <Compile Include="src\Util\Stream\AsyncStreamReader.cs" />
+    <Compile Include="src\Util\Stream\AsyncStreamWriter.cs" />
+    <Compile Include="src\Util\Stream\IAsyncStreamReader.cs" />
+    <Compile Include="src\Util\Stream\IAsyncStreamWriter.cs" />
+    <Compile Include="src\Util\ArgumentProviders\IRemoteInterfaceArgumentProvider.cs" />
+    <Compile Include="src\Channels\IRemoteInterfaceChannel.cs" />
+    <Compile Include="src\Util\InterfaceProviders\IRemoteInterfaceProvider.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\Channels\RemoteInterfaceChannel.cs" />
+    <Compile Include="src\Messages\RemoteInterfaceMessage.cs" />
+    <Compile Include="src\Connections\IRemoteInterfaceConnection.cs" />
+    <Compile Include="src\Messages\Values\SerializedRemoteInvocationValue.cs" />
+    <Compile Include="src\Connections\StreamInterfaceConnection.cs" />
+    <Compile Include="src\Serialization\IRemoteInterfaceSerializer.cs" />
+    <Compile Include="src\Tests\AsyncReaderTests.cs" />
+    <Compile Include="src\Tests\AsyncWriterTests.cs" />
+    <Compile Include="src\Tests\CachedTypeInfoResolverTests.cs" />
+    <Compile Include="src\Tests\CachedMethodInvokerTests.cs" />
+    <Compile Include="src\Tests\GenericAsyncStreamReaderTests.cs" />
+    <Compile Include="src\Tests\GenericAsyncWriterTests.cs" />
+    <Compile Include="src\Tests\GenericCachedTypeInfoResolverTests.cs" />
+    <Compile Include="src\Tests\GenericRemoteInterfaceConnectionTests.cs" />
+    <Compile Include="src\Tests\GenericRemoteInterfaceSerializerTests.cs" />
+    <Compile Include="src\Tests\RemoteChannelTests.cs" />
+    <Compile Include="src\Serialization\ProtobufHybridSerializer.cs" />
+    <Compile Include="src\Messages\RemoteInvocation.cs" />
+    <Compile Include="src\Messages\Results\VoidInvocationResult.cs" />
+    <Compile Include="src\Tests\StreamInterfaceConnectionTests.cs" />
+    <Compile Include="src\Tests\ProtobufHybridSerializerTests.cs" />
+    <Compile Include="src\Tests\RemoteInvocationMessageTests.cs" />
+    <Compile Include="src\Util\Cached\CachedMethodInvoker.cs" />
+    <Compile Include="src\Util\Cached\CachedTypeInfoResolver.cs" />
+    <Compile Include="src\Util\Cached\ICachedMethodInvoker.cs" />
+    <Compile Include="src\Util\Cached\ICachedTypeInfoResolver.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Shared\Shared.csproj">
+      <Project>{0FE53390-6475-4D1E-92DF-D9966690BC2B}</Project>
+      <Name>Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
