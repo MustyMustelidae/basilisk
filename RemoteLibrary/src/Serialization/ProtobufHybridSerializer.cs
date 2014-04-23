@@ -13,18 +13,18 @@ namespace RemoteLibrary.Serialization
         private const int MessageFieldNumber = 1;
         private const PrefixStyle MessagePrefixStyle = PrefixStyle.Fixed32;
 
-        public RemoteInterfaceMessage DeserializeMessage(Stream stream)
+        public RemoteCallMessage DeserializeMessage(Stream stream)
         {
             if (stream == null) throw new ArgumentNullException("stream");
-            return Serializer.DeserializeWithLengthPrefix<RemoteInterfaceMessage>(stream,
+            return Serializer.DeserializeWithLengthPrefix<RemoteCallMessage>(stream,
                 MessagePrefixStyle, MessageFieldNumber);
         }
 
-        public void SerializeMessage(Stream stream, RemoteInterfaceMessage interfaceMessage)
+        public void SerializeMessage(Stream stream, RemoteCallMessage callMessage)
         {
             if (stream == null) throw new ArgumentNullException("stream");
-            if (interfaceMessage == null) throw new ArgumentNullException("interfaceMessage");
-            Serializer.SerializeWithLengthPrefix(stream, interfaceMessage, MessagePrefixStyle);
+            if (callMessage == null) throw new ArgumentNullException("callMessage");
+            Serializer.SerializeWithLengthPrefix(stream, callMessage, MessagePrefixStyle);
         }
 
         public byte[] SerializeArgumentObject(object argumentObject)

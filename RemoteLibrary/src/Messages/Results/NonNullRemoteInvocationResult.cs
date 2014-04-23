@@ -11,7 +11,7 @@ namespace RemoteLibrary.Messages.Results
         public NonNullRemoteInvocationResult()
         {
         }
-
+        
         public NonNullRemoteInvocationResult(Guid guid, Type resultType, IRemoteInterfaceSerializer serializer,
             object resultObject) : base(guid)
         {
@@ -19,6 +19,8 @@ namespace RemoteLibrary.Messages.Results
         }
 
         [ProtoMember(1)]
-        public RemoteInvocationValue ReturnValue { get; private set; }
+        public SerializedRemoteInvocationValue ReturnValue { get;  set; }
+
+        public Type ReturnType{get { return ReturnValue.ArgumentType; }}
     }
 }

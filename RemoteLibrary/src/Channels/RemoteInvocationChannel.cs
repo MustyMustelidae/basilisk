@@ -15,7 +15,7 @@ using RemoteLibrary.Util.MethodInvokers;
 
 namespace RemoteLibrary.Channels
 {
-    internal class RemoteInterfaceChannel : IRemoteInterfaceChannel, IDisposable
+    internal class RemoteInvocationChannel : IRemoteInterfaceChannel, IDisposable
     {
         private const int MaxSentMessages = Int32.MaxValue;
         private static readonly SemaphoreSlim SendSemaphore = new SemaphoreSlim(MaxSentMessages);
@@ -27,7 +27,7 @@ namespace RemoteLibrary.Channels
 
         public OnNewInvocationHandler OnNewInvocation = delegate { };
 
-        public RemoteInterfaceChannel([NotNull] IRemoteInterfaceConnection connection,
+        public RemoteInvocationChannel([NotNull] IRemoteInterfaceConnection connection,
             [NotNull] IRemoteMethodInvoker methodInvoker)
         {
             if (connection == null) throw new ArgumentNullException("connection");
@@ -54,7 +54,7 @@ namespace RemoteLibrary.Channels
 
         public bool IsConnected { get; private set; }
 
-        public async Task<RemoteInterfaceMessage> SendMessageAndWaitForResponse([NotNull] RemoteInterfaceMessage message)
+        public async Task<RemoteCallMessage> SendMessageAndWaitForResponse([NotNull] RemoteCallMessage message)
         {
             if (message == null) throw new ArgumentNullException("message");
             var guid = message.MessageGuid;
@@ -79,7 +79,7 @@ namespace RemoteLibrary.Channels
             return result;
         }
 
-        public static RemoteInterfaceChannel FromNetworkStream([NotNull] NetworkStream networkStream,
+        public static RemoteInvocationChannel FromNetworkStream([NotNull] NetworkStream networkStream,
             [NotNull] IRemoteMethodInvoker methodInvoker, [NotNull] IRemoteInterfaceSerializer serializer)
         {
             if (networkStream == null) throw new ArgumentNullException("networkStream");
@@ -87,7 +87,7 @@ namespace RemoteLibrary.Channels
             if (serializer == null) throw new ArgumentNullException("serializer");
             var interfaceConnection = StreamInterfaceConnection.FromNetworkStream(networkStream, serializer);
 
-            return new RemoteInterfaceChannel(interfaceConnection, methodInvoker);
+            return new RemoteInvocationChannel(interfaceConnection, methodInvoker);
         }
 
 
@@ -128,7 +128,7 @@ namespace RemoteLibrary.Channels
             }
         }
 
-        private async Task HandleNewMessage(RemoteInterfaceMessage message, CancellationToken cancelToken)
+        private async Task HandleNewMessage(RemoteCallMessage message, CancellationToken cancelToken)
         {
             if (message is RemoteInvocation)
             {

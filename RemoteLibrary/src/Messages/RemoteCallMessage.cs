@@ -8,13 +8,13 @@ namespace RemoteLibrary.Messages
     [ProtoContract]
     [ProtoInclude(100, typeof (RemoteInvocation))]
     [ProtoInclude(200, typeof (RemoteInvocationResult))]
-    public abstract class RemoteInterfaceMessage
+    public abstract class RemoteCallMessage
     {
-        protected RemoteInterfaceMessage()
+        protected RemoteCallMessage()
         {
         }
 
-        protected RemoteInterfaceMessage(IGuidProvider guidProvider)
+        protected RemoteCallMessage(IGuidProvider guidProvider)
         {
             if (guidProvider == null) throw new ArgumentNullException("guidProvider");
             MessageGuid = guidProvider.GetNewGuid();

@@ -7,6 +7,7 @@ namespace RemoteLibrary.Messages.Values
 {
     public class SerializedRemoteInvocationValue : RemoteInvocationValue
     {
+        
         protected internal SerializedRemoteInvocationValue()
         {
         }
@@ -29,7 +30,7 @@ namespace RemoteLibrary.Messages.Values
                    && ArgumentBytes.SequenceEqual(otherVal.ArgumentBytes)
                    && ArgumentType == otherVal.ArgumentType;
         }
-
+         
         // ReSharper disable NonReadonlyFieldInGetHashCode
         public override int GetHashCode()
         {

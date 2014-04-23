@@ -9,7 +9,7 @@ using Shared;
 namespace RemoteLibrary.Messages
 {
     [ProtoContract]
-    public class RemoteInvocation : RemoteInterfaceMessage, IEquatable<RemoteInvocation>
+    public class RemoteInvocation : RemoteCallMessage, IEquatable<RemoteInvocation>
     {
         public RemoteInvocation(string methodName, Type invocationType,
             IEnumerable<RemoteInvocationValue> methodArguments, IGuidProvider guidProvider)

@@ -24,7 +24,7 @@ namespace RemoteLibrary.Tests
         }
 
         protected override StreamInterfaceConnection GetRemoteInterfaceConnectionWithMessageWaiting(
-            RemoteInterfaceMessage message)
+            RemoteCallMessage message)
         {
             var mockStreamReader = new Mock<IAsyncStreamReader>();
             var mockStreamWriter = new Mock<IAsyncStreamWriter>();
@@ -51,8 +51,8 @@ namespace RemoteLibrary.Tests
             return new StreamInterfaceConnection(mockStreamReader.Object, mockStreamWriter.Object, mockSerializer.Object);
         }
 
-        private readonly Dictionary<Guid, RemoteInterfaceMessage> _sentMessages =
-            new Dictionary<Guid, RemoteInterfaceMessage>();
+        private readonly Dictionary<Guid, RemoteCallMessage> _sentMessages =
+            new Dictionary<Guid, RemoteCallMessage>();
 
         protected override StreamInterfaceConnection GetRemoteInterfaceConnectionWithMessageSendingChecked(
             out Guid connectionGuid)
@@ -77,13 +77,13 @@ namespace RemoteLibrary.Tests
             var mockSerializer = new Mock<IRemoteInterfaceSerializer>();
             var guid = connectionGuid;
             mockSerializer.Setup(
-                serializer => serializer.SerializeMessage(It.IsAny<Stream>(), It.IsAny<RemoteInterfaceMessage>()))
-                .Callback((Stream stream, RemoteInterfaceMessage message) => _sentMessages.Add(guid, message));
+                serializer => serializer.SerializeMessage(It.IsAny<Stream>(), It.IsAny<RemoteCallMessage>()))
+                .Callback((Stream stream, RemoteCallMessage message) => _sentMessages.Add(guid, message));
 
             return new StreamInterfaceConnection(mockStreamReader.Object, mockStreamWriter.Object, mockSerializer.Object);
         }
 
-        protected override RemoteInterfaceMessage[] CheckConnectionMessages(Guid connectionGuid)
+        protected override RemoteCallMessage[] CheckConnectionMessages(Guid connectionGuid)
         {
             return _sentMessages
                 .ToArray()

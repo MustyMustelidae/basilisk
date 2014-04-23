@@ -7,7 +7,7 @@ namespace RemoteLibrary.Connections
 {
     public interface IRemoteInterfaceConnection : IDisposable
     {
-        Task<RemoteInterfaceMessage> GetMessage(CancellationToken cToken);
-        void SendMessage(RemoteInterfaceMessage message);
+        Task<RemoteCallMessage> GetMessage(CancellationToken cToken);
+        void SendMessage(RemoteCallMessage message);
     }
 }

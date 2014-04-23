@@ -16,14 +16,14 @@ namespace RemoteLibrary.Tests
         protected abstract T GetNewInterfaceSerializer();
 
         [ProtoContract]
-        protected class TestRemoteInterfaceMessage : RemoteInterfaceMessage
+        protected class TestRemoteCallMessage : RemoteCallMessage
         {
             [UsedImplicitly]
-            protected TestRemoteInterfaceMessage()
+            protected TestRemoteCallMessage()
             {
             }
 
-            public TestRemoteInterfaceMessage(Guid guid)
+            public TestRemoteCallMessage(Guid guid)
             {
                 MessageGuid = guid;
             }
@@ -77,7 +77,7 @@ namespace RemoteLibrary.Tests
             using (var stream = new MemoryStream())
             {
                 var guid = Guid.NewGuid();
-                var testMessage = new TestRemoteInterfaceMessage(guid);
+                var testMessage = new TestRemoteCallMessage(guid);
                 serializer.SerializeMessage(stream, testMessage);
 
                 stream.Seek(0, SeekOrigin.Begin);
@@ -141,7 +141,7 @@ namespace RemoteLibrary.Tests
         public void SerializeMessageThrowsExceptionOnNullStream()
         {
             var serializer = GetNewInterfaceSerializer();
-            var messageMock = new Mock<RemoteInterfaceMessage>();
+            var messageMock = new Mock<RemoteCallMessage>();
             serializer.SerializeMessage(null, messageMock.Object);
         }
     }

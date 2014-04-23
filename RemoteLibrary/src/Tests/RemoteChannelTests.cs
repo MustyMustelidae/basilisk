@@ -11,10 +11,10 @@ namespace RemoteLibrary.Tests
             /*  var connectionMock = new Mock<IRemoteInterfaceConnection>();
            
             var providerMock = new Mock<IRemoteInterfaceProvider>();
-            var channel = new RemoteInterfaceChannel(connectionMock.Object, providerMock.Object);
+            var channel = new RemoteInvocationChannel(connectionMock.Object, providerMock.Object);
            // channel.SendMessageAndWaitForResponse();
             connectionMock.Verify(connection =>
-                connection.SendMessage(It.IsAny<RemoteInterfaceMessage>()),
+                connection.SendMessage(It.IsAny<RemoteCallMessage>()),
                 Times.AtLeastOnce);*/
         }
     }

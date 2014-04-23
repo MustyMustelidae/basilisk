@@ -7,8 +7,8 @@ namespace RemoteLibrary.Serialization
 {
     public interface IRemoteInterfaceSerializer
     {
-        RemoteInterfaceMessage DeserializeMessage(Stream stream);
-        void SerializeMessage(Stream stream, RemoteInterfaceMessage interfaceMessage);
+        RemoteCallMessage DeserializeMessage(Stream stream);
+        void SerializeMessage(Stream stream, RemoteCallMessage callMessage);
         byte[] SerializeArgumentObject(object argumentObject);
         SerializedRemoteInvocationValue SerializeObjectToInvocationValue(Type objectType, object valueObject);
         object DeserializeArgumentToObject(SerializedRemoteInvocationValue argument);

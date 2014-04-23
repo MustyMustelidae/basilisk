@@ -128,9 +128,12 @@
     <Compile Include="Properties\RazorSectionAttribute.cs" />
     <Compile Include="Properties\StringFormatMethodAttribute.cs" />
     <Compile Include="Properties\UsedImplicitlyAttribute.cs" />
+    <Compile Include="src\InterfaceProviders\DynamicRemoteInterfaceObject.cs" />
+    <Compile Include="src\InterfaceProviders\IRemoteInterfaceProvider.cs" />
+    <Compile Include="src\Serialization\SerializerHelper.cs" />
+    <Compile Include="src\Tests\DynamicRemoteInterfaceObject.cs" />
     <Compile Include="src\Util\InterfaceProviders\IGenericRemoteInterfaceProvider.cs" />
     <Compile Include="src\Exceptions\InstanceNotDefinedException.cs" />
-    <Compile Include="src\Contracts\InvocationException.cs" />
     <Compile Include="src\Util\MethodInvokers\IRemoteMethodInvoker.cs" />
     <Compile Include="src\Util\ArgumentProviders\RemoteInterfaceArgumentProvider.cs" />
     <Compile Include="src\Util\InterfaceProviders\RemoteInterfaceProvider.cs" />
@@ -153,8 +156,8 @@
     <Compile Include="src\Channels\IRemoteInterfaceChannel.cs" />
     <Compile Include="src\Util\InterfaceProviders\IRemoteInterfaceProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\Channels\RemoteInterfaceChannel.cs" />
-    <Compile Include="src\Messages\RemoteInterfaceMessage.cs" />
+    <Compile Include="src\Channels\RemoteInvocationChannel.cs" />
+    <Compile Include="src\Messages\RemoteCallMessage.cs" />
     <Compile Include="src\Connections\IRemoteInterfaceConnection.cs" />
     <Compile Include="src\Messages\Values\SerializedRemoteInvocationValue.cs" />
     <Compile Include="src\Connections\StreamInterfaceConnection.cs" />
@@ -183,7 +186,9 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="src\Contracts\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Shared\Shared.csproj">
       <Project>{0FE53390-6475-4D1E-92DF-D9966690BC2B}</Project>

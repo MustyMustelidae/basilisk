@@ -12,30 +12,30 @@ namespace RemoteLibrary.Tests
     public abstract class GenericRemoteInterfaceConnectionTests<T> where T : IRemoteInterfaceConnection
     {
         [ProtoContract]
-        protected class TestRemoteInterfaceMessage : RemoteInterfaceMessage
+        protected class TestRemoteCallMessage : RemoteCallMessage
         {
             [UsedImplicitly]
-            public TestRemoteInterfaceMessage()
+            public TestRemoteCallMessage()
             {
                 MessageGuid = Guid.NewGuid();
             }
 
-            public TestRemoteInterfaceMessage(Guid guid)
+            public TestRemoteCallMessage(Guid guid)
             {
                 MessageGuid = guid;
             }
         }
 
         protected abstract T GetRemoteInterfaceConnection();
-        protected abstract T GetRemoteInterfaceConnectionWithMessageWaiting(RemoteInterfaceMessage message);
+        protected abstract T GetRemoteInterfaceConnectionWithMessageWaiting(RemoteCallMessage message);
 
         protected abstract T GetRemoteInterfaceConnectionWithMessageSendingChecked(out Guid connectionGuid);
-        protected abstract RemoteInterfaceMessage[] CheckConnectionMessages(Guid connectionGuid);
+        protected abstract RemoteCallMessage[] CheckConnectionMessages(Guid connectionGuid);
 
         [Test]
         public async void CanGetMessage()
         {
-            var testMessage = new TestRemoteInterfaceMessage();
+            var testMessage = new TestRemoteCallMessage();
             using (var cancelSource = new CancellationTokenSource())
             using (var connection = GetRemoteInterfaceConnectionWithMessageWaiting(testMessage))
             {
@@ -48,14 +48,14 @@ namespace RemoteLibrary.Tests
         [Test]
         public void CanSendMessage()
         {
-            var testMessage = new TestRemoteInterfaceMessage();
+            var testMessage = new TestRemoteCallMessage();
             Guid connectionGuid;
             using (var connection = GetRemoteInterfaceConnectionWithMessageSendingChecked(out connectionGuid))
             {
                 connection.SendMessage(testMessage);
 
 
-                RemoteInterfaceMessage[] messages;
+                RemoteCallMessage[] messages;
                 do
                 {
                     messages = CheckConnectionMessages(connectionGuid);

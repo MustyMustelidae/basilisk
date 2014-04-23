@@ -6,6 +6,6 @@ namespace RemoteLibrary.Channels
     public interface IRemoteInterfaceChannel
     {
         bool IsConnected { get; }
-        Task<RemoteInterfaceMessage> SendMessageAndWaitForResponse(RemoteInterfaceMessage message);
+        Task<RemoteCallMessage> SendMessageAndWaitForResponse(RemoteCallMessage message);
     }
 }

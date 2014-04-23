@@ -21,8 +21,8 @@ namespace RemoteLibrary.Connections
         private readonly IRemoteInterfaceSerializer _serializer;
         private readonly IAsyncStreamReader _streamReader;
         private readonly IAsyncStreamWriter _streamWriter;
-        protected BufferBlock<RemoteInterfaceMessage> ReceivedMessageBlock;
-        protected BufferBlock<RemoteInterfaceMessage> UnsentMessageBlock;
+        protected BufferBlock<RemoteCallMessage> ReceivedMessageBlock;
+        protected BufferBlock<RemoteCallMessage> UnsentMessageBlock;
 
         public StreamInterfaceConnection(IAsyncStreamReader streamReader, IAsyncStreamWriter streamWriter,
             IRemoteInterfaceSerializer serializer)
@@ -34,8 +34,8 @@ namespace RemoteLibrary.Connections
             _streamReader = streamReader;
             _streamWriter = streamWriter;
             _serializer = serializer;
-            ReceivedMessageBlock = new BufferBlock<RemoteInterfaceMessage>();
-            UnsentMessageBlock = new BufferBlock<RemoteInterfaceMessage>();
+            ReceivedMessageBlock = new BufferBlock<RemoteCallMessage>();
+            UnsentMessageBlock = new BufferBlock<RemoteCallMessage>();
             _cancelTokenSource = new CancellationTokenSource();
 
             _receiveLoopTask = ReceiveLoop(_cancelTokenSource)
@@ -50,13 +50,13 @@ namespace RemoteLibrary.Connections
 
         public bool IsConnected { get; private set; }
 
-        public async Task<RemoteInterfaceMessage> GetMessage(CancellationToken cToken)
+        public async Task<RemoteCallMessage> GetMessage(CancellationToken cToken)
         {
             if (cToken == default(CancellationToken)) throw new ArgumentNullException("cToken");
             return await ReceivedMessageBlock.ReceiveAsync(cToken);
         }
 
-        public void SendMessage(RemoteInterfaceMessage message)
+        public void SendMessage(RemoteCallMessage message)
         {
             if (message == null) throw new ArgumentNullException("message");
             UnsentMessageBlock.Post(message);

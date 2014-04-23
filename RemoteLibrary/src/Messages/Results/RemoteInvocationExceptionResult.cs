@@ -20,7 +20,7 @@ namespace RemoteLibrary.Messages.Results
         }
 
         [ProtoMember(1)]
-        public RemoteInvocationValue ExceptionValue { get; private set; }
+        public SerializedRemoteInvocationValue ExceptionValue { get; set; }
 
         public static RemoteInvocationExceptionResult FromException<T>(Guid guid, IRemoteInterfaceSerializer serializer,
             T exception) where T : Exception
