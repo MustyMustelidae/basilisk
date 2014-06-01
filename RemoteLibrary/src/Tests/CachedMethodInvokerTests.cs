@@ -3,7 +3,6 @@ using System.Reflection;
 using Moq;
 using NUnit.Framework;
 using RemoteLibrary.Properties;
-using RemoteLibrary.Util;
 using RemoteLibrary.Util.Cached;
 
 namespace RemoteLibrary.Tests

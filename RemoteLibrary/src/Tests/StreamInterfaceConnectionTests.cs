@@ -8,23 +8,22 @@ using Moq;
 using RemoteLibrary.Connections;
 using RemoteLibrary.Messages;
 using RemoteLibrary.Serialization;
-using RemoteLibrary.Util;
-using RemoteLibrary.Util.Stream;
+using RemoteLibrary.Util.StreamIO;
 
 namespace RemoteLibrary.Tests
 {
-    public class StreamInterfaceConnectionTests : GenericRemoteInterfaceConnectionTests<StreamInterfaceConnection>
+    public class StreamInterfaceConnectionTests : GenericRemoteInterfaceConnectionTests<StreamRpcConnection>
     {
-        protected override StreamInterfaceConnection GetRemoteInterfaceConnection()
+        protected override StreamRpcConnection GetRemoteInterfaceConnection()
         {
             var mockStreamReader = new Mock<IAsyncStreamReader>();
             var mockStreamWriter = new Mock<IAsyncStreamWriter>();
-            var mockSerializer = new Mock<IRemoteInterfaceSerializer>();
-            return new StreamInterfaceConnection(mockStreamReader.Object, mockStreamWriter.Object, mockSerializer.Object);
+            var mockSerializer = new Mock<IRpcSerializer>();
+            return new StreamRpcConnection(mockStreamReader.Object, mockStreamWriter.Object, mockSerializer.Object);
         }
 
-        protected override StreamInterfaceConnection GetRemoteInterfaceConnectionWithMessageWaiting(
-            RemoteCallMessage message)
+        protected override StreamRpcConnection GetRemoteInterfaceConnectionWithMessageWaiting(
+            BaseRpcMessage message)
         {
             var mockStreamReader = new Mock<IAsyncStreamReader>();
             var mockStreamWriter = new Mock<IAsyncStreamWriter>();
@@ -44,17 +43,17 @@ namespace RemoteLibrary.Tests
                 .Setup(writer => writer.WriteBytesAsync(It.IsAny<byte[]>(), It.IsAny<CancellationToken>()))
                 .Returns((byte[] bytes, CancellationToken token) => Task.Delay(operationWaitTime, token));
 
-            var mockSerializer = new Mock<IRemoteInterfaceSerializer>();
+            var mockSerializer = new Mock<IRpcSerializer>();
             mockSerializer.Setup(serializer => serializer.DeserializeMessage(It.IsAny<Stream>()))
                 .Returns(message);
 
-            return new StreamInterfaceConnection(mockStreamReader.Object, mockStreamWriter.Object, mockSerializer.Object);
+            return new StreamRpcConnection(mockStreamReader.Object, mockStreamWriter.Object, mockSerializer.Object);
         }
 
-        private readonly Dictionary<Guid, RemoteCallMessage> _sentMessages =
-            new Dictionary<Guid, RemoteCallMessage>();
+        private readonly Dictionary<Guid, BaseRpcMessage> _sentMessages =
+            new Dictionary<Guid, BaseRpcMessage>();
 
-        protected override StreamInterfaceConnection GetRemoteInterfaceConnectionWithMessageSendingChecked(
+        protected override StreamRpcConnection GetRemoteInterfaceConnectionWithMessageSendingChecked(
             out Guid connectionGuid)
         {
             connectionGuid = Guid.NewGuid();
@@ -74,16 +73,16 @@ namespace RemoteLibrary.Tests
             mockStreamWriter
                 .Setup(writer => writer.WriteBytesAsync(It.IsAny<byte[]>(), It.IsAny<CancellationToken>()))
                 .Returns((byte[] bytes, CancellationToken token) => Task.Delay(operationWaitTime, token));
-            var mockSerializer = new Mock<IRemoteInterfaceSerializer>();
+            var mockSerializer = new Mock<IRpcSerializer>();
             var guid = connectionGuid;
             mockSerializer.Setup(
-                serializer => serializer.SerializeMessage(It.IsAny<Stream>(), It.IsAny<RemoteCallMessage>()))
-                .Callback((Stream stream, RemoteCallMessage message) => _sentMessages.Add(guid, message));
+                serializer => serializer.SerializeMessage(It.IsAny<Stream>(), It.IsAny<BaseRpcMessage>()))
+                .Callback((Stream stream, BaseRpcMessage message) => _sentMessages.Add(guid, message));
 
-            return new StreamInterfaceConnection(mockStreamReader.Object, mockStreamWriter.Object, mockSerializer.Object);
+            return new StreamRpcConnection(mockStreamReader.Object, mockStreamWriter.Object, mockSerializer.Object);
         }
 
-        protected override RemoteCallMessage[] CheckConnectionMessages(Guid connectionGuid)
+        protected override BaseRpcMessage[] CheckConnectionMessages(Guid connectionGuid)
         {
             return _sentMessages
                 .ToArray()

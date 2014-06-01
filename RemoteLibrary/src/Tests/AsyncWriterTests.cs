@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using NUnit.Framework;
-using RemoteLibrary.Util;
-using RemoteLibrary.Util.Stream;
+using RemoteLibrary.Util.StreamIO;
 
 namespace RemoteLibrary.Tests
 {

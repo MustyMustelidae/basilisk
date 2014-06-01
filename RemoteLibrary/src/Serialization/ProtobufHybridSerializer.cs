@@ -8,23 +8,23 @@ using RemoteLibrary.Messages.Values;
 
 namespace RemoteLibrary.Serialization
 {
-    public class ProtobufHybridSerializer : IRemoteInterfaceSerializer
+    public class ProtobufHybridSerializer : IRpcSerializer
     {
         private const int MessageFieldNumber = 1;
         private const PrefixStyle MessagePrefixStyle = PrefixStyle.Fixed32;
 
-        public RemoteCallMessage DeserializeMessage(Stream stream)
+        public BaseRpcMessage DeserializeMessage(Stream stream)
         {
             if (stream == null) throw new ArgumentNullException("stream");
-            return Serializer.DeserializeWithLengthPrefix<RemoteCallMessage>(stream,
+            return Serializer.DeserializeWithLengthPrefix<BaseRpcMessage>(stream,
                 MessagePrefixStyle, MessageFieldNumber);
         }
 
-        public void SerializeMessage(Stream stream, RemoteCallMessage callMessage)
+        public void SerializeMessage(Stream stream, BaseRpcMessage proxyInvocationMessage)
         {
             if (stream == null) throw new ArgumentNullException("stream");
-            if (callMessage == null) throw new ArgumentNullException("callMessage");
-            Serializer.SerializeWithLengthPrefix(stream, callMessage, MessagePrefixStyle);
+            if (proxyInvocationMessage == null) throw new ArgumentNullException("proxyInvocationMessage");
+            Serializer.SerializeWithLengthPrefix(stream, proxyInvocationMessage, MessagePrefixStyle);
         }
 
         public byte[] SerializeArgumentObject(object argumentObject)
@@ -48,9 +48,9 @@ namespace RemoteLibrary.Serialization
             return objectBytes;
         }
 
-        public SerializedRemoteInvocationValue SerializeObjectToInvocationValue(Type objectType, object valueObject)
+        public SerializedRpcValue SerializeObjectToInvocationValue(Type objectType, object valueObject)
         {
-            return new SerializedRemoteInvocationValue
+            return new SerializedRpcValue
             {
                 ArgumentBytes = SerializeArgumentObject(valueObject),
                 ArgumentType = objectType,
@@ -58,7 +58,7 @@ namespace RemoteLibrary.Serialization
             };
         }
 
-        public object DeserializeArgumentToObject(SerializedRemoteInvocationValue argument)
+        public object DeserializeArgumentToObject(SerializedRpcValue argument)
         {
             if (argument == null) throw new ArgumentNullException("argument");
 

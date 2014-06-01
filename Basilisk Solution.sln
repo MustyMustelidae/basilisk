@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{9C8C4EAB-13FA-410F-8F04-591570E8089C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{0FE53390-6475-4D1E-92DF-D9966690BC2B}"
@@ -8,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsShared", "WinFormsShared\WinFormsShared.csproj", "{66696888-CD35-455F-B9EA-3AF60F38D759}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteLibrary", "RemoteLibrary\RemoteLibrary.csproj", "{2932EA35-22B8-4A2B-A037-DFDC32E617E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{5DB0165C-CB1C-41DD-A7BD-878553B88990}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +35,10 @@ Global
 		{2932EA35-22B8-4A2B-A037-DFDC32E617E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2932EA35-22B8-4A2B-A037-DFDC32E617E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2932EA35-22B8-4A2B-A037-DFDC32E617E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DB0165C-CB1C-41DD-A7BD-878553B88990}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DB0165C-CB1C-41DD-A7BD-878553B88990}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DB0165C-CB1C-41DD-A7BD-878553B88990}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DB0165C-CB1C-41DD-A7BD-878553B88990}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -11,19 +11,19 @@ using RemoteLibrary.Serialization;
 namespace RemoteLibrary.Tests
 {
     [TestFixture]
-    public abstract class GenericRemoteInterfaceSerializerTests<T> where T : IRemoteInterfaceSerializer
+    public abstract class GenericRemoteInterfaceSerializerTests<T> where T : IRpcSerializer
     {
         protected abstract T GetNewInterfaceSerializer();
 
         [ProtoContract]
-        protected class TestRemoteCallMessage : RemoteCallMessage
+        protected class TestBaseRemoteProxyInvocationMessage : BaseRpcMessage
         {
             [UsedImplicitly]
-            protected TestRemoteCallMessage()
+            protected TestBaseRemoteProxyInvocationMessage()
             {
             }
 
-            public TestRemoteCallMessage(Guid guid)
+            public TestBaseRemoteProxyInvocationMessage(Guid guid)
             {
                 MessageGuid = guid;
             }
@@ -39,7 +39,7 @@ namespace RemoteLibrary.Tests
 
 
         [ProtoContract]
-        protected class TestRemoteInvocationValue : SerializedRemoteInvocationValue
+        protected class TestRemoteInvocationValue : SerializedRpcValue
         {
             [UsedImplicitly]
             protected TestRemoteInvocationValue()
@@ -59,7 +59,7 @@ namespace RemoteLibrary.Tests
 
             var guid = Guid.NewGuid();
             var serializedGuid = serializer.SerializeArgumentObject(guid);
-            var argument = new SerializedRemoteInvocationValue
+            var argument = new SerializedRpcValue
             {
                 ArgumentBytes = serializedGuid,
                 ArgumentType = typeof (Guid)
@@ -77,7 +77,7 @@ namespace RemoteLibrary.Tests
             using (var stream = new MemoryStream())
             {
                 var guid = Guid.NewGuid();
-                var testMessage = new TestRemoteCallMessage(guid);
+                var testMessage = new TestBaseRemoteProxyInvocationMessage(guid);
                 serializer.SerializeMessage(stream, testMessage);
 
                 stream.Seek(0, SeekOrigin.Begin);
@@ -141,7 +141,7 @@ namespace RemoteLibrary.Tests
         public void SerializeMessageThrowsExceptionOnNullStream()
         {
             var serializer = GetNewInterfaceSerializer();
-            var messageMock = new Mock<RemoteCallMessage>();
+            var messageMock = new Mock<BaseRpcMessage>();
             serializer.SerializeMessage(null, messageMock.Object);
         }
     }

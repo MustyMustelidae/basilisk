@@ -9,33 +9,33 @@ using RemoteLibrary.Properties;
 namespace RemoteLibrary.Tests
 {
     [TestFixture]
-    public abstract class GenericRemoteInterfaceConnectionTests<T> where T : IRemoteInterfaceConnection
+    public abstract class GenericRemoteInterfaceConnectionTests<T> where T : IRpcConnection
     {
         [ProtoContract]
-        protected class TestRemoteCallMessage : RemoteCallMessage
+        protected class TestBaseRemoteProxyInvocationMessage : BaseRpcMessage
         {
             [UsedImplicitly]
-            public TestRemoteCallMessage()
+            public TestBaseRemoteProxyInvocationMessage()
             {
                 MessageGuid = Guid.NewGuid();
             }
 
-            public TestRemoteCallMessage(Guid guid)
+            public TestBaseRemoteProxyInvocationMessage(Guid guid)
             {
                 MessageGuid = guid;
             }
         }
 
         protected abstract T GetRemoteInterfaceConnection();
-        protected abstract T GetRemoteInterfaceConnectionWithMessageWaiting(RemoteCallMessage message);
+        protected abstract T GetRemoteInterfaceConnectionWithMessageWaiting(BaseRpcMessage message);
 
         protected abstract T GetRemoteInterfaceConnectionWithMessageSendingChecked(out Guid connectionGuid);
-        protected abstract RemoteCallMessage[] CheckConnectionMessages(Guid connectionGuid);
+        protected abstract BaseRpcMessage[] CheckConnectionMessages(Guid connectionGuid);
 
         [Test]
         public async void CanGetMessage()
         {
-            var testMessage = new TestRemoteCallMessage();
+            var testMessage = new TestBaseRemoteProxyInvocationMessage();
             using (var cancelSource = new CancellationTokenSource())
             using (var connection = GetRemoteInterfaceConnectionWithMessageWaiting(testMessage))
             {
@@ -48,14 +48,14 @@ namespace RemoteLibrary.Tests
         [Test]
         public void CanSendMessage()
         {
-            var testMessage = new TestRemoteCallMessage();
+            var testMessage = new TestBaseRemoteProxyInvocationMessage();
             Guid connectionGuid;
             using (var connection = GetRemoteInterfaceConnectionWithMessageSendingChecked(out connectionGuid))
             {
                 connection.SendMessage(testMessage);
 
 
-                RemoteCallMessage[] messages;
+                BaseRpcMessage[] messages;
                 do
                 {
                     messages = CheckConnectionMessages(connectionGuid);

@@ -16,7 +16,7 @@ namespace RemoteLibrary.Tests
         public void EqualityTest()
         {
             var guidProviderMock = new Mock<IGuidProvider>();
-            var serializerMock = new Mock<IRemoteInterfaceSerializer>();
+            var serializerMock = new Mock<IRpcSerializer>();
 
             const string testMethodName = "VoidMethodWithNoParam";
 
@@ -29,10 +29,10 @@ namespace RemoteLibrary.Tests
 
             var testType = typeof (RemoteInvocationMessageTests);
 
-            var messageA = new RemoteInvocation(testMethodName, testType,
-                new[] {new NullRemoteInvocationValue(testType)}, guidProviderMock.Object);
-            var messageB = new RemoteInvocation(testMethodName, testType,
-                new[] {new NullRemoteInvocationValue(testType)}, guidProviderMock.Object);
+            var messageA = new RpcMessage(testMethodName, testType,
+                new[] {new NullRpcValue(testType)}, guidProviderMock.Object);
+            var messageB = new RpcMessage(testMethodName, testType,
+                new[] {new NullRpcValue(testType)}, guidProviderMock.Object);
             Assert.IsTrue(messageA.Equals(messageB));
             Assert.AreEqual(messageA, messageB);
         }

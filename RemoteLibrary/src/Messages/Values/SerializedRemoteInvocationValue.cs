@@ -1,14 +1,12 @@
-using System;
 using System.Linq;
 using ProtoBuf;
-using RemoteLibrary.Serialization;
 
 namespace RemoteLibrary.Messages.Values
 {
-    public class SerializedRemoteInvocationValue : RemoteInvocationValue
+    public class SerializedRpcValue : RpcValue
     {
         
-        protected internal SerializedRemoteInvocationValue()
+        protected internal SerializedRpcValue()
         {
         }
 
@@ -25,7 +23,7 @@ namespace RemoteLibrary.Messages.Values
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
-            var otherVal = (SerializedRemoteInvocationValue) obj;
+            var otherVal = (SerializedRpcValue) obj;
             return IsBinaryType.Equals(otherVal.IsBinaryType)
                    && ArgumentBytes.SequenceEqual(otherVal.ArgumentBytes)
                    && ArgumentType == otherVal.ArgumentType;

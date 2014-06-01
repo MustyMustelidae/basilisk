@@ -1,19 +1,18 @@
 ﻿using System;
 using ProtoBuf;
-using RemoteLibrary.Serialization;
 
 namespace RemoteLibrary.Messages.Values
 {
     [ProtoContract]
-    [ProtoInclude(100, typeof (NullRemoteInvocationValue))]
-    [ProtoInclude(200, typeof (SerializedRemoteInvocationValue))]
-    public abstract class RemoteInvocationValue
+    [ProtoInclude(100, typeof (NullRpcValue))]
+    [ProtoInclude(200, typeof (SerializedRpcValue))]
+    public abstract class RpcValue
     {
-        protected internal RemoteInvocationValue()
+        protected internal RpcValue()
         {
         }
 
-        protected RemoteInvocationValue(Type objectType)
+        protected RpcValue(Type objectType)
         {
             ArgumentType = objectType;
         }
@@ -30,7 +29,7 @@ namespace RemoteLibrary.Messages.Values
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
-            var otherVal = (RemoteInvocationValue) obj;
+            var otherVal = (RpcValue) obj;
             return ArgumentType.Equals(otherVal.ArgumentType);
         }
 

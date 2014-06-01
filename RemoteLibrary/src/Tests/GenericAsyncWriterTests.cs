@@ -4,8 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using NUnit.Framework;
-using RemoteLibrary.Util;
-using RemoteLibrary.Util.Stream;
+using RemoteLibrary.Util.StreamIO;
 
 namespace RemoteLibrary.Tests
 {

@@ -5,8 +5,7 @@ using System.Linq;
 using System.Threading;
 using Moq;
 using NUnit.Framework;
-using RemoteLibrary.Util;
-using RemoteLibrary.Util.Stream;
+using RemoteLibrary.Util.StreamIO;
 
 namespace RemoteLibrary.Tests
 {

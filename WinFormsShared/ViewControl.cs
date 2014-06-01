@@ -1,19 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace WinFormsShared
 {
     public class ViewControl : UserControl
     {
-        public bool IsSetup { get; private set; }
+        private bool _isSetup;
+
         protected ViewControl()
         {
-            VisibleChanged += OnVisibleChanged;
+            HandleCreated += OnHandleCreated;
+        }
+
+        private static readonly bool DesignTime = LicenseManager.UsageMode == LicenseUsageMode.Designtime;
+        public bool IsSetup
+        {
+            get
+            {
+                return DesignTime || _isSetup;
+            }
+            protected set
+            {
+                _isSetup = value;
+            }
         }
 
         protected void Setup()
@@ -21,9 +32,9 @@ namespace WinFormsShared
             IsSetup = true;
         }
 
-        private void OnVisibleChanged(object sender, EventArgs eventArgs)
+        private void OnHandleCreated(object sender, EventArgs eventArgs)
         {
-            Contract.Requires(IsSetup);
+            Debug.Assert(IsSetup);
         }
     }
 }

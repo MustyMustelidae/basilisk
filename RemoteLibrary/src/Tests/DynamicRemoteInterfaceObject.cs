@@ -18,13 +18,13 @@ namespace RemoteLibrary.Tests
     [TestFixture]
     public class DynamicRemoteInterfaceObjectTests
     {
-        private interface ITestInterface
+        public interface ITestInterface
         {
             object ReturnValue(object val);
             void NonReturningMethod();
             void ExceptionThrowingMethod();
         }
-
+        [Serializable]
         private class TestException : Exception
         {
         }
@@ -41,39 +41,39 @@ namespace RemoteLibrary.Tests
             get { return TestGuid.ToByteArray(); }
         }
 
-        private ITestInterface GenerateTestClassProxyClass(RemoteCallMessage expectedMessage, object expectedRawValue,
-            SerializedRemoteInvocationValue expectedValue, out Mock<IRemoteInterfaceSerializer> serializerMock,
-            out Mock<IRemoteInterfaceChannel> channelMock)
+        private ITestInterface GenerateTestClassProxyClass(BaseRpcMessage expectedMessage, object expectedRawValue,
+            SerializedRpcValue expectedValue, out Mock<IRemoteProxySIRpcSerializerock,
+            out Mock<IRpcChannel> channelMock)
         {
-            serializerMock = new Mock<IRemoteInterfaceSerializer>();
+            serializerMock = new Mock<IRpcSerializer>();
             serializerMock.Setup(serializer => serializer.SerializeArgumentObject(It.IsAny<object>()))
                 .Returns(TestBytes);
 
             serializerMock.Setup(
-                serializer => serializer.SerializeMessage(It.IsAny<Stream>(), It.IsAny<RemoteCallMessage>()));
+                serializer => serializer.SerializeMessage(It.IsAny<Stream>(), It.IsAny<BaseRpcMessage>()));
 
             serializerMock.Setup(
                 serializer => serializer.SerializeObjectToInvocationValue(It.IsAny<Type>(), It.IsAny<object>()))
                 .Returns(expectedValue);
 
             serializerMock.Setup(
-                serializer => serializer.DeserializeArgumentToObject(It.IsAny<SerializedRemoteInvocationValue>()))
+                serializer => serializer.DeserializeArgumentToObject(It.IsAny<SerializedRpcValue>()))
                 .Returns(expectedRawValue);
 
             serializerMock.Setup(
                 serializer => serializer.DeserializeMessage(It.IsAny<Stream>()))
                 .Returns(expectedMessage);
 
-            channelMock = new Mock<IRemoteInterfaceChannel>();
+            channelMock = new Mock<IRpcChannel>();
 
-            channelMock.Setup(channel => channel.SendMessageAndWaitForResponse(It.IsAny<RemoteCallMessage>()))
+            channelMock.Setup(channel => channel.SendMessage(It.IsAny<BaseRpcMessage>()))
                 .Returns(Task.FromResult(expectedMessage));
 
-            var infoResolverMock = new Mock<ICachedTypeInfoResolver>();
+            var infoResolverMock = new Mock<ICachedTypeResolver>();
 
             var guidProviderMock = new Mock<IGuidProvider>();
             guidProviderMock.Setup(provider => provider.GetNewGuid()).Returns(TestGuid);
-            var interfaceObject = new DynamicRemoteInterfaceObject(channelMock.Object, infoResolverMock.Object,
+            var interfaceObject = new ChannelRpcDynamicObject(channelMock.Object, infoResolverMock.Object,
                 _testType,
                 serializerMock.Object, guidProviderMock.Object);
 
@@ -85,19 +85,19 @@ namespace RemoteLibrary.Tests
         [TestCase(9)]
         public void CanInvokeMethodWithArgsAndParams(object expectedValue)
         {
-            var expectedInvocationValue = new SerializedRemoteInvocationValue
+            var expectedInvocationValue = new SerializedRpcValue
             {
                 ArgumentBytes = TestBytes,
                 ArgumentType = expectedValue.GetType(),
                 IsBinaryType = true
             };
-            var expectedResult = new NonNullRemoteInvocationResult
+            var expectedResult = new NonNullRemoteProxyInvocationResult
             {
                 MessageGuid = TestGuid,
                 ReturnValue = expectedInvocationValue
             };
-            Mock<IRemoteInterfaceSerializer> serializerMock;
-            Mock<IRemoteInterfaceChannel> channelMock;
+            Mock<IRpcSerializer> serializerMock;
+            Mock<IRpcChannel> channelMock;
             var proxy = GenerateTestClassProxyClass(expectedResult, expectedValue, expectedInvocationValue,
                 out serializerMock,
                 out channelMock);
@@ -109,19 +109,19 @@ namespace RemoteLibrary.Tests
         public void CanInvokeMethodWithArgsAndParamsThatAreExceptions()
         {
             var expectedValue = new TestException();
-            var expectedInvocationValue = new SerializedRemoteInvocationValue
+            var expectedInvocationValue = new SerializedRpcValue
             {
                 ArgumentBytes = TestBytes,
                 ArgumentType = expectedValue.GetType(),
                 IsBinaryType = true
             };
-            var expectedResult = new NonNullRemoteInvocationResult
+            var expectedResult = new NonNullRemoteProxyInvocationResult
             {
                 MessageGuid = TestGuid,
                 ReturnValue = expectedInvocationValue
             };
-            Mock<IRemoteInterfaceSerializer> serializerMock;
-            Mock<IRemoteInterfaceChannel> channelMock;
+            Mock<IRpcSerializer> serializerMock;
+            Mock<IRpcChannel> channelMock;
             var proxy = GenerateTestClassProxyClass(expectedResult, expectedValue, expectedInvocationValue,
                 out serializerMock,
                 out channelMock);
@@ -136,20 +136,20 @@ namespace RemoteLibrary.Tests
         {
             Exception expectedRawValue = new TestException();
 
-            var expectedInvocationValue = new SerializedRemoteInvocationValue
+            var expectedInvocationValue = new SerializedRpcValue
             {
                 ArgumentBytes = TestBytes,
                 ArgumentType = expectedRawValue.GetType(),
                 IsBinaryType = true
             };
 
-            var expectedResult = new RemoteInvocationExceptionResult
+            var expectedResult = new RemoteProxyInvocationExceptionResult
             {
                 MessageGuid = TestGuid,
                 ExceptionValue = expectedInvocationValue
             };
-            Mock<IRemoteInterfaceSerializer> serializerMock;
-            Mock<IRemoteInterfaceChannel> channelMock;
+            Mock<IRpcSerializer> serializerMock;
+            Mock<IRpcChannel> channelMock;
             var proxy = GenerateTestClassProxyClass(expectedResult, expectedRawValue, expectedInvocationValue,
                 out serializerMock,
                 out channelMock);
@@ -164,19 +164,19 @@ namespace RemoteLibrary.Tests
         {
             const string expectedValue = "Test";
 
-            var expectedInvocationValue = new SerializedRemoteInvocationValue
+            var expectedInvocationValue = new SerializedRpcValue
             {
                 ArgumentBytes = TestBytes,
                 ArgumentType = expectedValue.GetType(),
                 IsBinaryType = true
             };
-            var expectedResult = new NonNullRemoteInvocationResult
+            var expectedResult = new NonNullRemoteProxyInvocationResult
             {
                 MessageGuid = TestGuid,
                 ReturnValue = expectedInvocationValue
             };
-            Mock<IRemoteInterfaceSerializer> serializerMock;
-            Mock<IRemoteInterfaceChannel> channelMock;
+            Mock<IRpcSerializer> serializerMock;
+            Mock<IRpcChannel> channelMock;
             var proxy = GenerateTestClassProxyClass(expectedResult, expectedValue, expectedInvocationValue,
                 out serializerMock,
                 out channelMock);

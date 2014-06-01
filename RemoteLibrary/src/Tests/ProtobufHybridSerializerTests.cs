@@ -30,12 +30,12 @@ namespace RemoteLibrary.Tests
         static ProtobufHybridSerializerTests()
         {
             RuntimeTypeModel.Default.Add(typeof (ContractTestClass), true);
-            var messageProtoModel = RuntimeTypeModel.Default[typeof (RemoteCallMessage)];
+            var messageProtoModel = RuntimeTypeModel.Default[typeof (BaseRpcMessage)];
             var maxFieldNumber = messageProtoModel.GetSubtypes()
                 .Select(type => type.FieldNumber)
                 .Max() + 100;
             messageProtoModel.AddSubType(maxFieldNumber,
-                typeof (TestRemoteCallMessage));
+                typeof (TestBaseRemoteProxyInvocationMessage));
         }
 
         protected override ProtobufHybridSerializer GetNewInterfaceSerializer()
@@ -51,7 +51,7 @@ namespace RemoteLibrary.Tests
             const string testString = "HelloWorld";
             var testObject = new ContractTestClass(testString);
             var serializedTestObject = serializer.SerializeArgumentObject(testObject);
-            var argument = new SerializedRemoteInvocationValue
+            var argument = new SerializedRpcValue
             {
                 ArgumentBytes = serializedTestObject,
                 ArgumentType = typeof (ContractTestClass)

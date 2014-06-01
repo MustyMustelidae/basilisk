@@ -8,13 +8,13 @@ namespace RemoteLibrary.Tests
         [Test]
         public void SendTest()
         {
-            /*  var connectionMock = new Mock<IRemoteInterfaceConnection>();
+            /*  var connectionMock = new Mock<IRpcConnection>();
            
-            var providerMock = new Mock<IRemoteInterfaceProvider>();
-            var channel = new RemoteInvocationChannel(connectionMock.Object, providerMock.Object);
-           // channel.SendMessageAndWaitForResponse();
+            var providerMock = new Mock<IRemoteProxyLocalInstanceProvider>();
+            var channel = new RemoteProxyChannel(connectionMock.Object, providerMock.Object);
+           // channel.SendMessage();
             connectionMock.Verify(connection =>
-                connection.SendMessage(It.IsAny<RemoteCallMessage>()),
+                connection.SendMessage(It.IsAny<BaseRemoteProxyInvocationMessage>()),
                 Times.AtLeastOnce);*/
         }
     }
