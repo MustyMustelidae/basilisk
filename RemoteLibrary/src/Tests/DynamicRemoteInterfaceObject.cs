@@ -42,7 +42,7 @@ namespace RemoteLibrary.Tests
         }
 
         private ITestInterface GenerateTestClassProxyClass(BaseRpcMessage expectedMessage, object expectedRawValue,
-            SerializedRpcValue expectedValue, out Mock<IRemoteProxySIRpcSerializerock,
+            SerializedRpcValue expectedValue, out Mock<IRpcSerializer> serializerMock,
             out Mock<IRpcChannel> channelMock)
         {
             serializerMock = new Mock<IRpcSerializer>();
